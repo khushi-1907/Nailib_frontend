@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/hero";
+import StatsSection from "../components/MovingStatsSection";
 
 
 export default function HomePage() {
@@ -7,6 +8,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-deep-navy">
       <Navbar />
       <Hero />
+      <StatsSection />
     </main>
   );
 }
