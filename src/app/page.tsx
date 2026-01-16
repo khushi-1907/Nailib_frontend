@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/hero";
-import StatsSection from "../components/MovingStatsSection";
+import StatsSection from "@/components/MovingStatsSection";
+import CardsSection from "@/components/CardsSection";
 
 
 export default function HomePage() {
@@ -9,6 +10,7 @@ export default function HomePage() {
       <Navbar />
       <Hero />
       <StatsSection />
+      <CardsSection />
     </main>
   );
 }
