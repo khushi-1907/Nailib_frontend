@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Nail IB | The Gold Standard for IB Excellence",
+  title: "NailIB | The Largest IB Resource Platform on Earth",
   description: "IB resources, videos, flashcards and practice questions",
 };
 

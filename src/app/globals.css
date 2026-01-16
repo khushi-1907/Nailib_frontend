@@ -1,15 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
 
-.glass-header {
-  backdrop-filter: blur(12px);
-}
-
-.bento-card {
-  transition: transform 0.3s ease;
-}
-
-.bento-card:hover {
-  transform: translateY(-4px);
+body {
+  @apply bg-gradient-to-b from-deep-charcoal to-deep-navy text-white selection:bg-primary/30;
 }
