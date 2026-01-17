@@ -8,11 +8,11 @@ const Navbar: FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-deep-charcoal/80 backdrop-blur-md border-b border-white/5">
+    <header className="sticky top-0 z-50 bg-background-dark/80 backdrop-blur-xl border-b border-white/10">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
 
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
+        <a href="/" className="flex items-center gap-2 group">
           <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center transition-transform group-hover:scale-110">
             <img src="/logo.png" alt="Nail IB Logo" className="w-full h-full object-contain" />
           </div>
