@@ -4,6 +4,20 @@ import { FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { List, X, CaretRight, Book, GraduationCap, FileText, CurrencyDollar } from "phosphor-react";
 
+const NAV_LINKS = [
+  { label: "Resources", href: "#", icon: Book },
+  { label: "Schools", href: "#", icon: GraduationCap },
+  { label: "Past Papers", href: "#", icon: FileText },
+  { label: "Pricing", href: "#", icon: CurrencyDollar },
+];
+
+const NAV_LINKS = [
+  { label: "Resources", href: "#", icon: Book },
+  { label: "Schools", href: "#", icon: GraduationCap },
+  { label: "Past Papers", href: "#", icon: FileText },
+  { label: "Pricing", href: "#", icon: CurrencyDollar },
+];
+
 const Navbar: FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -23,10 +37,11 @@ const Navbar: FC = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
-          <a href="#" className="hover:text-primary transition-colors">Resources</a>
-          <a href="#" className="hover:text-primary transition-colors">Schools</a>
-          <a href="#" className="hover:text-primary transition-colors">Past Papers</a>
-          <a href="#" className="hover:text-primary transition-colors">Pricing</a>
+          {NAV_LINKS.map((link) => (
+            <a key={link.label} href={link.href} className="hover:text-primary transition-colors">
+              {link.label}
+            </a>
+          ))}
         </div>
 
         <div className="flex items-center gap-4">
@@ -42,11 +57,13 @@ const Navbar: FC = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden p-2 text-slate-400 hover:text-white transition-colors"
+            className="md:hidden p-2 text-slate-400 hover:text-white transition-all active:scale-90"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={24} /> : <List size={24} />}
+            <div className="transition-transform duration-200">
+              {mobileOpen ? <X size={24} /> : <div className="hover:scale-110"><List size={24} /></div>}
+            </div>
           </button>
         </div>
       </nav>
@@ -55,18 +72,11 @@ const Navbar: FC = () => {
       {mobileOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-deep-charcoal border-b border-white/5 py-6 px-4 space-y-4 animate-in slide-in-from-top duration-300">
           <div className="flex flex-col gap-4">
-            <a href="#" className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
-              <Book size={20} /> Resources
-            </a>
-            <a href="#" className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
-              <GraduationCap size={20} /> Schools
-            </a>
-            <a href="#" className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
-              <FileText size={20} /> Past Papers
-            </a>
-            <a href="#" className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
-              <CurrencyDollar size={20} /> Pricing
-            </a>
+            {NAV_LINKS.map((link) => (
+              <a key={link.label} href={link.href} className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
+                <link.icon size={20} /> {link.label}
+              </a>
+            ))}
           </div>
           <div className="pt-4 border-t border-white/5 flex flex-col gap-4">
             <a href="#" className="text-center py-3 font-semibold text-slate-300 hover:text-white transition-colors">Login</a>
