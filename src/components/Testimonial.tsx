@@ -104,9 +104,9 @@ export default function TestimonialsShowcase() {
   }, []);
 
   return (
-    <section className="py-24 bg-[#0a0f1d] relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2" />
+    <section className="py-24 bg-surface-dark-alt relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
@@ -121,7 +121,7 @@ export default function TestimonialsShowcase() {
             <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
               Trusted by <span className="text-primary">IB Students</span> Worldwide
             </h2>
-            <p className="text-slate-400 text-lg mt-4">
+            <p className="text-slate-300 text-lg mt-4">
               Real stories from students who transformed their IB journey.
             </p>
           </div>
@@ -129,13 +129,13 @@ export default function TestimonialsShowcase() {
           <div className="flex gap-4">
             <button
               onClick={() => scrollByAmount("left")}
-              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-primary hover:border-primary transition"
+              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/20 text-white hover:bg-primary hover:border-primary transition"
             >
               <CaretLeft size={24} />
             </button>
             <button
               onClick={() => scrollByAmount("right")}
-              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-primary hover:border-primary transition"
+              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/20 text-white hover:bg-primary hover:border-primary transition"
             >
               <CaretRight size={24} />
             </button>
@@ -179,9 +179,9 @@ export default function TestimonialsShowcase() {
 
 
                 {/* Content */}
-                <div className="p-6 bg-[#0f172a] border-t border-white/5">
+                <div className="p-6 bg-[#0f172a] border-t border-white/15">
                   {t.quote && (
-                    <p className="text-slate-300 italic leading-relaxed mb-4">
+                    <p className="text-slate-200 italic leading-relaxed mb-4">
                       “{t.quote}”
                     </p>
                   )}

@@ -36,9 +36,9 @@ const UniversitiesSection = () => {
   }, []);
 
   return (
-    <section className="py-12 border-y border-white/5 bg-white/[0.02] overflow-hidden relative">
+    <section className="py-12 border-y border-white/10 bg-[#0b1219] overflow-hidden relative">
       <div className="max-w-7xl mx-auto">
-        <p className="text-center text-xs font-semibold text-slate-500 uppercase tracking-[0.2em] mb-6">
+        <p className="text-center text-xs font-semibold text-slate-400 uppercase tracking-[0.2em] mb-6">
           Trusted by top universities worldwide
         </p>
         <div className="flex gap-12 whitespace-nowrap relative">

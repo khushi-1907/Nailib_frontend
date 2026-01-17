@@ -13,10 +13,10 @@ body {
   }
 
   .inner-glow {
-    box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .card-border-premium {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 }

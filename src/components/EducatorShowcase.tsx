@@ -128,7 +128,7 @@ export default function EducatorShowcase() {
   }, []);
 
   return (
-    <section className="py-24 bg-[#0a0f1d] relative overflow-hidden">
+    <section className="py-24 bg-surface-dark-alt relative overflow-hidden">
       {/* Background Orbs */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
@@ -144,7 +144,7 @@ export default function EducatorShowcase() {
             <h2 className="text-4xl md:text-5xl font-display font-black text-white leading-tight">
               Learn from the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Elite 1%</span> of IB Educators
             </h2>
-            <p className="text-slate-400 text-lg mt-4 font-medium">
+            <p className="text-slate-300 text-lg mt-4 font-medium">
               Every course is handcrafted by top-tier IB examiners and specialists to ensure you nail your exams.
             </p>
           </div>
@@ -152,14 +152,14 @@ export default function EducatorShowcase() {
           <div className="flex gap-4">
             <button
               onClick={() => scrollByAmount("left")}
-              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-primary hover:border-primary transition-all duration-300 group shadow-lg"
+              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/20 text-white hover:bg-primary hover:border-primary transition-all duration-300 group shadow-lg"
               aria-label="Scroll Left"
             >
               <CaretLeft size={24} className="group-hover:scale-110 transition-transform" />
             </button>
             <button
               onClick={() => scrollByAmount("right")}
-              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-primary hover:border-primary transition-all duration-300 group shadow-lg"
+              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/20 text-white hover:bg-primary hover:border-primary transition-all duration-300 group shadow-lg"
               aria-label="Scroll Right"
             >
               <CaretRight size={24} className="group-hover:scale-110 transition-transform" />

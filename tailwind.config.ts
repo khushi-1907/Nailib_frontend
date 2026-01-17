@@ -14,6 +14,8 @@ module.exports = {
         "accent-emerald": "#10b981",
         "accent-gold": "#f59e0b",
         "surface-dark": "#1a232e",
+        "surface-dark-alt": "#080c14",
+        "surface-dark-deep": "#05080c",
         "deep-charcoal": "#0F172A",
         "deep-navy": "#020617",
         "card-surface": "#1E293B",
