@@ -2,7 +2,7 @@
 
 import { FC, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { List, X, CaretRight } from "phosphor-react";
+import { List, X, CaretRight, Book, GraduationCap, FileText, CurrencyDollar } from "phosphor-react";
 
 const Navbar: FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -10,7 +10,7 @@ const Navbar: FC = () => {
   return (
     <header className="sticky top-0 z-50 bg-deep-charcoal/80 backdrop-blur-md border-b border-white/5">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
-        
+
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
           <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center transition-transform group-hover:scale-110">
@@ -55,10 +55,18 @@ const Navbar: FC = () => {
       {mobileOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-deep-charcoal border-b border-white/5 py-6 px-4 space-y-4 animate-in slide-in-from-top duration-300">
           <div className="flex flex-col gap-4">
-            <a href="#" className="text-lg font-semibold text-slate-300 hover:text-white px-2">Resources</a>
-            <a href="#" className="text-lg font-semibold text-slate-300 hover:text-white px-2">Schools</a>
-            <a href="#" className="text-lg font-semibold text-slate-300 hover:text-white px-2">Past Papers</a>
-            <a href="#" className="text-lg font-semibold text-slate-300 hover:text-white px-2">Pricing</a>
+            <a href="#" className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
+              <Book size={20} /> Resources
+            </a>
+            <a href="#" className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
+              <GraduationCap size={20} /> Schools
+            </a>
+            <a href="#" className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
+              <FileText size={20} /> Past Papers
+            </a>
+            <a href="#" className="flex items-center gap-2 text-lg font-semibold text-slate-300 hover:text-white px-2">
+              <CurrencyDollar size={20} /> Pricing
+            </a>
           </div>
           <div className="pt-4 border-t border-white/5 flex flex-col gap-4">
             <a href="#" className="text-center py-3 font-semibold text-slate-300 hover:text-white transition-colors">Login</a>

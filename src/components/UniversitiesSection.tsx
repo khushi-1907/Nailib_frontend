@@ -13,7 +13,7 @@ const logos = [
   "/yale.png",
 ];
 
-const MovingStatsSection = () => {
+const UniversitiesSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,6 +62,6 @@ const MovingStatsSection = () => {
   );
 };
 
-export default MovingStatsSection;
+export default UniversitiesSection;
 
 

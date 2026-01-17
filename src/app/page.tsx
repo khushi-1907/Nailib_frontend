@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import StatsSection from "@/components/MovingStatsSection";
+import UniversitiesSection from "@/components/UniversitiesSection";
 import CardsSection from "@/components/CardsSection";
 import EducatorShowcase from "@/components/EducatorShowcase";
 import Testimonial from "@/components/Testimonial";
@@ -13,9 +13,9 @@ export default function HomePage() {
     <main className="min-h-screen bg-deep-navy">
       <Navbar />
       <Hero />
-      <StatsSection />
-      <CardsSection />
+      <UniversitiesSection />
       <EducatorShowcase />
+      <CardsSection />
       <Testimonial />
       <PricingSection />
       <Footer />
