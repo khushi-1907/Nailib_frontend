@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-deep-navy">
+    <main className="min-h-screen bg-background-dark">
       <Navbar />
       <Hero />
       <UniversitiesSection />
