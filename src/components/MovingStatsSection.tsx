@@ -1,4 +1,3 @@
-// components/MovingStatsSection.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -64,3 +63,5 @@ const MovingStatsSection = () => {
 };
 
 export default MovingStatsSection;
+
+

@@ -3,6 +3,7 @@ import Hero from "@/components/hero";
 import StatsSection from "@/components/MovingStatsSection";
 import CardsSection from "@/components/CardsSection";
 import EducatorShowcase from "@/components/EducatorShowcase";
+import Testimonial from "@/components/Testimonial";
 
 
 export default function HomePage() {
@@ -13,6 +14,7 @@ export default function HomePage() {
       <StatsSection />
       <CardsSection />
       <EducatorShowcase />
+      <Testimonial />
     </main>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-// components/EverythingYouNeed.tsx
 import React from "react";
 import { VideoCamera, Book, Cards, ClipboardText } from "phosphor-react";
 
