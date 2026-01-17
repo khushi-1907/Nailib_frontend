@@ -52,12 +52,12 @@ const Hero: FC = () => {
                     Trusted by 50,000+ Students
                 </span>
 
-                <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl font-display font-black tracking-tight text-white mb-8 leading-[1.1]">
+                <h1 className="hero-title text-4xl md:text-7xl lg:text-8xl font-display font-black tracking-tight text-white mb-6 leading-[1.1] md:mb-8">
                     The Largest{" "}
                     <span className="text-primary italic">IB Resource</span> Platform on Earth
                 </h1>
 
-                <p className="hero-subtitle text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                <p className="hero-subtitle text-base md:text-xl text-slate-300 max-w-xl mx-auto mb-10 leading-relaxed md:max-w-2xl">
                     Access over{" "}
                     <span className="font-bold text-white">5,294+ examiner-led videos</span>,{" "}
                     35,956+ practice questions, and expert-crafted guides to boost your IB success.
