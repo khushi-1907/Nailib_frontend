@@ -1,146 +1,225 @@
 "use client";
 
-import { useEffect } from "react";
-import { Play } from "phosphor-react";
+import { useRef, useEffect, useState, useCallback } from "react";
+import {
+  Play,
+  CaretLeft,
+  CaretRight,
+  Quotes,
+  X,
+} from "phosphor-react";
 
 type Testimonial = {
   id: string;
   name: string;
-  text?: string;
+  quote?: string;
   image: string;
-  video?: boolean;
+  video?: string;
+  role?: string;
 };
 
 const testimonials: Testimonial[] = [
   {
     id: "1",
     name: "Hazel Barnes",
-    text:
-      "This platform genuinely changed how I approached IB. The explanations are clear, practical, and calming during exam season.",
+    role: "IB DP Student",
+    quote:
+      "This platform completely transformed my IB preparation. Everything finally made sense.",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDMJiqTo-2EPf49oZyTUQ2iVqTLt0ZZ693DaCoP3C8FUlKlBEh5jDD_as6rDExhJvEiPh497XKy8-a7U8D45i01STdN4aU65xaiZjiPTJ95x5hbbZcSExCf4Z7upcINNag9zaYO0pk1qJ1nsKbFVOfThR9jO0QBmSHpXNOOpmQB4FD0DVKkSezAFQoAqMEmcKbKs2eqq1Vy-mzpt5qaCj4ptI5oF9OyOWAMkG7mYJuJnY3ptwDwVCTGMUU_ljznPiog8vuSGIykmFpI",
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=800",
   },
   {
     id: "2",
-    name: "IB Student Story",
+    name: "IB Success Story",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAJbEVu2FD-e0WqSuVUF-RDU4qckKGs4uFJtCVeF3P1ge0MD5bepKprz7ye5ITaKoEjr8BUFdigSk8Nam5nVcPQwLVCUuIDFbVbhaU_w4XCY6JBiPIDngE4RX56BvYiueP1xWx34YRGS5Lf4RPi5sesS4xi8ayAQsaaDuj3pbRUME8tv0TK0nEYLUj0YHDUuvyzOrOwMgsr4A2KB7GUPqZM5B0sU9qEaH7vCLjnE6nihsNP2UvYrFCCmQxBtzr6oYrR67WwxhcikkiT",
-    video: true,
+      "https://images.unsplash.com/photo-1544717305-996b815c338c?auto=format&fit=crop&q=80&w=800",
+    video: "https://www.w3schools.com/html/mov_bbb.mp4",
   },
   {
     id: "3",
     name: "Erik Briggs",
-    text:
-      "The video walkthroughs helped me finally understand topics I struggled with for months. Worth every minute.",
+    role: "IB HL Candidate",
+    quote:
+      "The video explanations cleared concepts I struggled with for months.",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDg3Xl2nRcAZi6qSb4XgyyFV8j1SfesVSyKA9DDAM_Pqnb1yend9UZkZ0ga7wZvQ21mDSX9m3EXaPuBHn8c3j9aI9HBc09hq13RnLbGGcG-YmF8j864TU2fWlRXDEeSAEz0R5vBrTHa9QJ5ogqGH5mLFKzcni5BfzUT6PEm4OWTssnwYUrYonuAy7fxerAl7yrJfwACGkvJgvXIPxzAL2dvEzt66Rr0EZDrudBIJomXEVMOZifPqXQ1AZJ9uBZGnpAx6mjvEYAnjOn6",
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800",
   },
   {
     id: "4",
     name: "Lyla Rogers",
-    text:
-      "Everything feels structured and intentional. It removed so much anxiety from my IB preparation.",
+    role: "IB Graduate",
+    quote:
+      "Structured, calm, and incredibly effective. My confidence skyrocketed.",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuALf1ik0L1KYo0vT5aLNBUiN_05xs6m-MRt_sZMVw2ntmGXlUPweuqeyQRHfK0f7SscP0OnO9JYPOsyPEkI_kc3BUKIg04XrOUPi4u405TkbJJtzGctMqT_CTwid2raWkgx_TPyEykD04imF5Pvoh1nJ2JN00ceT6OKE3dJ_HHGwYIURMmmnsXMnhyBVq8znOcfn4hL-3XEwcImopKKdbjT7uB-WOwlQY91H6V1RzlRu-l0slSLlkZncbyM7Pvkhlt1uPea9yLvRND1",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=800",
   },
 ];
 
-export default function TestimonialsSection() {
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+export default function TestimonialsShowcase() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
-    import("gsap").then(({ gsap }) => {
-      gsap.fromTo(
-        ".testimonial",
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.15,
-          ease: "power2.out",
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let raf: number;
+    let scrollPos = container.scrollLeft;
+
+    const animate = () => {
+      if (!paused && !activeVideo) {
+        scrollPos += 0.6;
+
+        if (scrollPos >= container.scrollWidth / 2) {
+          scrollPos = 0;
         }
-      );
+
+        container.scrollLeft = scrollPos;
+      } else {
+        scrollPos = container.scrollLeft;
+      }
+
+      raf = requestAnimationFrame(animate);
+    };
+
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, [paused, activeVideo]);
+
+  const scrollByAmount = useCallback((dir: "left" | "right") => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    setPaused(true);
+    const cardWidth = container.children[0]?.clientWidth ?? 360;
+    const gap = 32;
+
+    container.scrollBy({
+      left: dir === "left" ? -(cardWidth + gap) : cardWidth + gap,
+      behavior: "smooth",
     });
+
+    setTimeout(() => setPaused(false), 2500);
   }, []);
 
   return (
-    <section className="py-24 bg-background-dark text-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-24 bg-[#0a0f1d] relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2" />
+
+      <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-            Real Stories. <span className="text-primary">Real Results.</span>
-          </h2>
-          <p className="max-w-2xl mx-auto text-slate-400 text-lg">
-            Students across the world trust our platform to guide them through
-            the IB journey with confidence.
-          </p>
+        <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-4">
+              <Quotes size={14} className="text-primary" />
+              <span className="text-xs font-bold uppercase tracking-wider text-primary">
+                Student Voices
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
+              Trusted by <span className="text-primary">IB Students</span> Worldwide
+            </h2>
+            <p className="text-slate-400 text-lg mt-4">
+              Real stories from students who transformed their IB journey.
+            </p>
+          </div>
+
+          <div className="flex gap-4">
+            <button
+              onClick={() => scrollByAmount("left")}
+              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-primary hover:border-primary transition"
+            >
+              <CaretLeft size={24} />
+            </button>
+            <button
+              onClick={() => scrollByAmount("right")}
+              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-primary hover:border-primary transition"
+            >
+              <CaretRight size={24} />
+            </button>
+          </div>
         </div>
 
-        {/* Testimonials */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {testimonials.map((item) =>
-            item.video ? (
-              <div
-                key={item.id}
-                className="testimonial relative rounded-2xl overflow-hidden shadow-2xl"
-              >
-                <img
-                  src={item.image}
-                  alt="Student video testimonial"
-                  className="w-full h-full object-cover"
-                />
+        {/* Carousel */}
+        <div
+          ref={containerRef}
+          className="flex gap-8 overflow-x-hidden no-scrollbar pb-12"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+            <div
+              key={`${t.id}-${i}`}
+              className="min-w-[320px] md:min-w-[380px]"
+            >
+              <div className="relative rounded-3xl overflow-hidden bg-slate-900 border border-white/5 shadow-2xl group hover:-translate-y-2 transition-all duration-500">
+                {/* Media */}
+                <div className="relative h-[220px] overflow-hidden">
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
 
-                <div className="absolute inset-0 bg-black/40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
-                <button
-                  aria-label="Play testimonial video"
-                  className="absolute inset-0 flex items-center justify-center"
-                >
-                  <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center shadow-lg hover:scale-105 transition">
-                    <Play size={28} weight="fill" />
+                  {t.video && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <button
+                        onClick={() => setActiveVideo(t.video!)}
+                        className="w-16 h-16 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-2xl shadow-primary/40 scale-95 group-hover:scale-100 transition"
+                      >
+                        <Play size={28} weight="fill" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+
+                {/* Content */}
+                <div className="p-6 bg-[#0f172a] border-t border-white/5">
+                  {t.quote && (
+                    <p className="text-slate-300 italic leading-relaxed mb-4">
+                      “{t.quote}”
+                    </p>
+                  )}
+                  <div>
+                    <p className="font-bold text-white">{t.name}</p>
+                    {t.role && (
+                      <span className="text-xs text-primary font-semibold uppercase tracking-wider">
+                        {t.role}
+                      </span>
+                    )}
                   </div>
-                </button>
-
-                <div className="absolute bottom-5 left-5">
-                  <p className="font-semibold">Watch Success Story</p>
-                  <span className="text-sm text-slate-300">
-                    3 min student journey
-                  </span>
                 </div>
               </div>
-            ) : (
-              <div
-                key={item.id}
-                className="testimonial bg-card-dark border border-white/10 rounded-2xl overflow-hidden shadow-xl flex flex-col"
-              >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="h-56 w-full object-cover grayscale hover:grayscale-0 transition"
-                />
-
-                <div className="p-6 flex flex-col flex-grow">
-                  <p className="text-slate-300 italic leading-relaxed mb-6">
-                    “{item.text}”
-                  </p>
-                  <span className="mt-auto font-semibold text-primary">
-                    {item.name}
-                  </span>
-                </div>
-              </div>
-            )
-          )}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-20 text-center">
-          <button className="px-8 py-4 rounded-full bg-primary font-semibold shadow-lg hover:bg-blue-600 transition active:scale-95">
-            Join 50,000+ IB Students
-          </button>
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Video Modal */}
+      {activeVideo && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+          onClick={() => setActiveVideo(null)}
+        >
+          <div
+            className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <video src={activeVideo} controls autoPlay className="w-full h-full" />
+            <button
+              onClick={() => setActiveVideo(null)}
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center"
+            >
+              <X size={20} />
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
