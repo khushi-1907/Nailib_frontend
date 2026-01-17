@@ -46,17 +46,21 @@ const CardsSection: FC = () => {
             cards.forEach((card) => {
                 card.addEventListener("mouseenter", () => {
                     gsap.to(card, {
-                        scale: 1.01,
-                        borderColor: "rgba(19, 109, 236, 0.6)",
-                        duration: 0.3,
+                        y: -4,
+                        backgroundColor: "rgba(255, 255, 255, 0.02)",
+                        borderColor: "rgba(19, 109, 236, 0.8)",
+                        boxShadow: "0 20px 40px -20px rgba(19, 109, 236, 0.3)",
+                        duration: 0.4,
                         ease: "power2.out",
                     });
                 });
                 card.addEventListener("mouseleave", () => {
                     gsap.to(card, {
-                        scale: 1,
+                        y: 0,
+                        backgroundColor: "transparent",
                         borderColor: "rgba(255, 255, 255, 0.15)",
-                        duration: 0.3,
+                        boxShadow: "none",
+                        duration: 0.4,
                         ease: "power2.out",
                     });
                 });
