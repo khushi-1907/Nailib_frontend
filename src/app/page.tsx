@@ -4,6 +4,7 @@ import StatsSection from "@/components/MovingStatsSection";
 import CardsSection from "@/components/CardsSection";
 import EducatorShowcase from "@/components/EducatorShowcase";
 import Testimonial from "@/components/Testimonial";
+import PricingSection from "@/components/Pricing";
 
 
 export default function HomePage() {
@@ -15,6 +16,7 @@ export default function HomePage() {
       <CardsSection />
       <EducatorShowcase />
       <Testimonial />
+      <PricingSection />
     </main>
   );
 }
