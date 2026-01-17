@@ -23,20 +23,24 @@ export default function PricingSection() {
     const [activePlan, setActivePlan] = useState<PlanId>("24");
 
     useEffect(() => {
-        // Entrance animations
-        gsap.from(".feature-item", {
-            y: 20,
-            opacity: 0,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: "power3.out",
+        const ctx = gsap.context(() => {
+            // Entrance animations
+            gsap.from(".feature-item", {
+                y: 20,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.08,
+                ease: "power3.out",
+            });
+            gsap.from("#pricing-card", {
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                ease: "power4.out",
+            });
         });
-        gsap.from("#pricing-card", {
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            ease: "power4.out",
-        });
+
+        return () => ctx.revert();
     }, []);
 
     const handlePlanChange = (planId: PlanId) => {
