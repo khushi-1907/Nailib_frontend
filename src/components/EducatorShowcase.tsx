@@ -3,13 +3,13 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { Play, Folder, CaretLeft, CaretRight, GraduationCap, VideoCamera, Users, X } from "phosphor-react";
 
-type Course = {
+interface Course {
   name: string;
   color: string;
-  icon: typeof Folder;
-};
+  icon: React.ElementType;
+}
 
-type Educator = {
+interface Educator {
   name: string;
   role: string;
   image: string;
@@ -18,8 +18,8 @@ type Educator = {
   stats: {
     students: string;
     videos: string;
-  }
-};
+  };
+}
 
 const educators: Educator[] = [
   {
