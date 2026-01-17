@@ -13,6 +13,20 @@ import {
 } from "@phosphor-icons/react";
 import { gsap } from "gsap";
 
+const ACCURACY_DATA = [
+    { label: "MATH", height: "45%", color: "bg-primary/40" },
+    { label: "PHYS", height: "65%", color: "bg-primary/40" },
+    { label: "CHEM", height: "35%", color: "bg-primary/40" },
+    { label: "ECON", height: "85%", color: "bg-accent-emerald/40" },
+    { label: "BIO", height: "55%", color: "bg-primary/40" },
+];
+
+const SECONDARY_FEATURES = [
+    { icon: <Lightning className="text-primary" />, title: "Smart Drill", desc: "Focus on Paper 1 multiple choice logic.", color: "hover:border-primary/50", iconColor: "group-hover/item:text-primary" },
+    { icon: <BookOpen className="text-accent-gold" />, title: "Past Paper Mode", desc: "Simulate real exam conditions with timers.", color: "hover:border-accent-gold/50", iconColor: "group-hover/item:text-accent-gold" },
+    { icon: <Brain className="text-accent-emerald" />, title: "Topic Heatmap", desc: "Visualize syllabus coverage automatically.", color: "hover:border-accent-emerald/50", iconColor: "group-hover/item:text-accent-emerald" },
+];
+
 const CardsSection: FC = () => {
     const sectionRef = useRef<HTMLElement>(null);
 
@@ -96,13 +110,7 @@ const CardsSection: FC = () => {
                                     </span>
                                 </div>
                                 <div className="grid grid-cols-5 gap-3 items-end h-32 mb-4">
-                                    {[
-                                        { label: "MATH", height: "45%", color: "bg-primary/40" },
-                                        { label: "PHYS", height: "65%", color: "bg-primary/40" },
-                                        { label: "CHEM", height: "35%", color: "bg-primary/40" },
-                                        { label: "ECON", height: "85%", color: "bg-accent-emerald/40" },
-                                        { label: "BIO", height: "55%", color: "bg-primary/40" },
-                                    ].map((item, i) => (
+                                    {ACCURACY_DATA.map((item, i) => (
                                         <div key={i} className="flex flex-col items-center gap-2 h-full justify-end">
                                             <div className="w-full bg-white/5 rounded-t-md relative overflow-hidden" style={{ height: item.height }}>
                                                 <div className={`absolute bottom-0 w-full ${item.color} h-full`}></div>
@@ -119,11 +127,7 @@ const CardsSection: FC = () => {
 
                             {/* Side Features */}
                             <div className="flex flex-col gap-4">
-                                {[
-                                    { icon: <Lightning className="text-primary" />, title: "Smart Drill", desc: "Focus on Paper 1 multiple choice logic.", color: "hover:border-primary/50", iconColor: "group-hover/item:text-primary" },
-                                    { icon: <BookOpen className="text-accent-gold" />, title: "Past Paper Mode", desc: "Simulate real exam conditions with timers.", color: "hover:border-accent-gold/50", iconColor: "group-hover/item:text-accent-gold" },
-                                    { icon: <Brain className="text-accent-emerald" />, title: "Topic Heatmap", desc: "Visualize syllabus coverage automatically.", color: "hover:border-accent-emerald/50", iconColor: "group-hover/item:text-accent-emerald" },
-                                ].map((feature, i) => (
+                                {SECONDARY_FEATURES.map((feature, i) => (
                                     <div key={i} className={`p-4 rounded-xl bg-white/5 border border-white/5 ${feature.color} transition-colors cursor-pointer group/item`}>
                                         <div className="flex items-center gap-3 mb-1">
                                             {feature.icon}
