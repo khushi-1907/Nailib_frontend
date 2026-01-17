@@ -5,6 +5,7 @@ import CardsSection from "@/components/CardsSection";
 import EducatorShowcase from "@/components/EducatorShowcase";
 import Testimonial from "@/components/Testimonial";
 import PricingSection from "@/components/Pricing";
+import Footer from "@/components/Footer";
 
 
 export default function HomePage() {
@@ -17,6 +18,7 @@ export default function HomePage() {
       <EducatorShowcase />
       <Testimonial />
       <PricingSection />
+      <Footer />
     </main>
   );
 }
