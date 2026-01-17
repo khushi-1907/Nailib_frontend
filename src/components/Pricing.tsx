@@ -47,8 +47,8 @@ export default function PricingSection() {
         setActivePlan(planId);
         gsap.fromTo(
             "#pricing-card",
-            { scale: 1 },
-            { scale: 1.02, duration: 0.15, yoyo: true, repeat: 1, ease: "power2.inOut" }
+            { scale: 1, backgroundColor: "rgba(255, 255, 255, 0.02)" },
+            { scale: 1.01, backgroundColor: "rgba(255, 255, 255, 0.05)", duration: 0.2, yoyo: true, repeat: 1, ease: "power2.inOut" }
         );
     };
 
