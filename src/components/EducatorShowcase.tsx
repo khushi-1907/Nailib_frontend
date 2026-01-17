@@ -1,198 +1,269 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { CaretLeft, CaretRight, Play, Folder } from "phosphor-react";
+import { useRef, useEffect, useState, useCallback } from "react";
+import { Play, Folder, CaretLeft, CaretRight, GraduationCap, VideoCamera, Users, X } from "phosphor-react";
 
 type Course = {
   name: string;
-  color: "orange" | "amber" | "red";
+  color: string;
+  icon: typeof Folder;
 };
 
 type Educator = {
   name: string;
-  description: string;
+  role: string;
   image: string;
+  video: string;
   courses: Course[];
+  stats: {
+    students: string;
+    videos: string;
+  }
 };
 
 const educators: Educator[] = [
   {
     name: "Dr. Anshul Verma",
-    description:
-      "Expert IB History teacher with 6+ years of experience. Yale alum and Gold Medalist, specializing in modern European history.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCnNDtZSknGSALs_fwNHeXXVQ0_dLWvpxbq9vfwXE36dkq83m88ySxtF_CbxPW-BwOxnrfyVT_rKZ2ZH2L-dIc1MK9xQEN25-OIjqgSiOtRVJ7ltaZe3ZY4n8j6ahuT1YAuAIiJoDmPglxMToFqpcIVmKPv-fkXtfspXFMONyYo-naggrG3nze0z5fDWShwz-8YmDcNDGJa4FGvtg73GCYtgNBbT8f3GCEFU9-I6UG-4lUVNl0qBSZ1lbQJXZ2nV7JjX9i2R5qaYP1L",
+    role: "Core History Specialist",
+    image: "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?auto=format&fit=crop&q=80&w=800",
+    video: "https://www.w3schools.com/html/mov_bbb.mp4",
+    stats: { students: "12K+", videos: "120+" },
     courses: [
-      { name: "History SL", color: "orange" },
-      { name: "History HL", color: "red" },
+      { name: "History SL", color: "from-orange-500 to-red-500", icon: Folder },
+      { name: "History HL", color: "from-red-500 to-pink-600", icon: Folder },
     ],
   },
   {
     name: "Deepika",
-    description:
-      "IB Geography educator with a diverse academic background and strong experience in human geography.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCGMZXZDTnvRpL_n6ilwOyrZR4O8gpQ50XqLfaymwyY-B09ec-NvB583qWyo6X78UQgmGB9uut79trxSrYpuMIU_edEHwI1mJ00ST-s6MgzwYV0hqmR-IvERerh3TKEySt_VMADotHHjx24DXK5c7CiAF3aqTUeXGlm5eB8-upDuFYTH3LlIHc6QvhTTT0kL08Vw7WRBAAmZzgy0q9DbThyxBbwignrGEF8aQKSSYR17U8m7hVlUMjeZIfKGCtoBGZ4zFlhEdSaoewy",
+    role: "Human Geography Expert",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+    video: "https://www.w3schools.com/html/movie.mp4",
+    stats: { students: "8.5K+", videos: "95+" },
     courses: [
-      { name: "Geography SL", color: "amber" },
-      { name: "Geography HL", color: "red" },
+      { name: "Geography SL", color: "from-amber-400 to-orange-500", icon: Folder },
+      { name: "Geography HL", color: "from-orange-500 to-red-500", icon: Folder },
     ],
   },
   {
     name: "Paulomi Choudhury",
-    description:
-      "Certified IB Psychology professional with 7+ years of experience and a Master’s in Psychology.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD3J9-DBL2YU5jWOKzyqX0xZQVXegagOZ0PjUMnBb2q_yME8DBRz-j-ifb244d6TJqtVnEiubHXZMVLqOENDJaOjVon1xENetRlkTqUydCgJe7AQ81EvhLoh9P0cz1-Tq4NY6UxGmps_eUPOhL7tglME9uYmDDw2nLrQ7-ePzn1_vFikf5PxPIZekkjtlx7WNzCvRogxnFd6C8rSRcmRSxVqBIJ_9JV_5ezsn20MDwEzaw6oqssetITYTMvppsCFRQX1l388ynBqWL9",
+    role: "Senior Psychology Consultant",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=800",
+    video: "https://www.w3schools.com/html/mov_bbb.mp4",
+    stats: { students: "15K+", videos: "150+" },
     courses: [
-      { name: "Psychology SL", color: "orange" },
-      { name: "Psychology HL", color: "red" },
+      { name: "Psychology SL", color: "from-purple-500 to-indigo-600", icon: Folder },
+      { name: "Psychology HL", color: "from-indigo-600 to-blue-700", icon: Folder },
     ],
   },
   {
     name: "Mr. Dexter Hayworth",
-    description:
-      "English Literature educator with a global perspective and engaging teaching methods.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB5zxXuY4mBxvWNO6l4o7Yrfu-KZ1VYiIT1rJVz2jYiO5t6hqplti1Q0JUUJFad2dO3ZLINDhg96WM_tvHJH1bPlHoExkRmZWhMBqRTxnD10kOA_rPkHtE66vcSkjSWBSNK1vNhuHxainMKCNk4BjTRC1e92pjyDMDlAhENlQw-wHks8UooMXkGJVT6qzKTUx0-tdDqlu2KXTyZ6SRZKPF3o38Dh5NPa9VPSAFFTgCoCEyMebE6yDihJS1yo8Uwm4TZkF4PDpAySoBO",
-    courses: [{ name: "English Lit HL", color: "red" }],
+    role: "English Literature Lead",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800",
+    video: "https://www.w3schools.com/html/movie.mp4",
+    stats: { students: "10K+", videos: "85+" },
+    courses: [
+      { name: "English Lit HL", color: "from-emerald-500 to-teal-600", icon: Folder }
+    ],
   },
+  {
+    name: "Marcus XYZ",
+    role: "Physics Head",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800",
+    video: "https://www.w3schools.com/html/movie.mp4",
+    stats: { students: "18K+", videos: "110+" },
+    courses: [
+      { name: "Physics HL", color: "from-rose-500 to-purple-600", icon: Folder },
+      { name: "Physics SL", color: "from-purple-600 to-indigo-700", icon: Folder },
+    ],
+  }
 ];
 
 export default function EducatorShowcase() {
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
-  const scrollByCard = (direction: "left" | "right") => {
-    if (!listRef.current) return;
-
-    const firstCard = listRef.current.children[0] as HTMLElement | undefined;
-    if (!firstCard) return;
-
-    const scrollAmount = firstCard.offsetWidth + 24;
-
-    listRef.current.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
-  };
-
+  // Custom infinite scroll logic
   useEffect(() => {
-    const container = listRef.current;
+    const container = containerRef.current;
     if (!container) return;
 
-    const onScroll = () => {
-      const firstCard = container.children[0] as HTMLElement | undefined;
-      if (!firstCard) return;
+    let animationFrameId: number;
+    let scrollPos = container.scrollLeft;
 
-      const index = Math.round(container.scrollLeft / (firstCard.offsetWidth + 24));
-      setActiveIndex(index);
+    const scroll = () => {
+      if (!isPaused && !activeVideo) {
+        scrollPos += 0.8; // Smooth auto-scroll speed
+
+        if (scrollPos >= container.scrollWidth / 2) {
+          scrollPos = 0;
+        }
+
+        container.scrollLeft = scrollPos;
+      } else {
+        scrollPos = container.scrollLeft;
+      }
+      animationFrameId = requestAnimationFrame(scroll);
     };
 
-    container.addEventListener("scroll", onScroll);
-    return () => container.removeEventListener("scroll", onScroll);
+    animationFrameId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isPaused, activeVideo]);
+
+  const scrollByAmount = useCallback((dir: "left" | "right") => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    setIsPaused(true);
+    const cardWidth = container.children[0]?.clientWidth ?? 350;
+    const gap = 24;
+
+    container.scrollBy({
+      left: dir === "left" ? -(cardWidth + gap) : (cardWidth + gap),
+      behavior: "smooth",
+    });
+
+    // Resume auto-scroll after a delay
+    setTimeout(() => setIsPaused(false), 3000);
   }, []);
 
   return (
-    <section className="py-20 max-w-7xl mx-auto px-6">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div>
-          <span className="text-primary font-semibold uppercase tracking-wider text-sm">
-            Meet Your Mentors
-          </span>
-          <h2 className="text-4xl md:text-5xl font-display font-extrabold mt-2">
-            Learn from the{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
-              IB Elites
-            </span>
-          </h2>
-          <p className="mt-4 max-w-xl text-slate-500 dark:text-slate-400 text-lg">
-            Access premium video courses led by world-class educators.
-          </p>
+    <section className="py-24 bg-[#0a0f1d] relative overflow-hidden">
+      {/* Background Orbs */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-4">
+              <GraduationCap className="text-primary" size={16} />
+              <span className="text-xs font-bold uppercase tracking-wider text-primary">Master Class Mentors</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-display font-black text-white leading-tight">
+              Learn from the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Elite 1%</span> of IB Educators
+            </h2>
+            <p className="text-slate-400 text-lg mt-4 font-medium">
+              Every course is handcrafted by top-tier IB examiners and specialists to ensure you nail your exams.
+            </p>
+          </div>
+
+          <div className="flex gap-4">
+            <button
+              onClick={() => scrollByAmount("left")}
+              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-primary hover:border-primary transition-all duration-300 group shadow-lg"
+              aria-label="Scroll Left"
+            >
+              <CaretLeft size={24} className="group-hover:scale-110 transition-transform" />
+            </button>
+            <button
+              onClick={() => scrollByAmount("right")}
+              className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-primary hover:border-primary transition-all duration-300 group shadow-lg"
+              aria-label="Scroll Right"
+            >
+              <CaretRight size={24} className="group-hover:scale-110 transition-transform" />
+            </button>
+          </div>
         </div>
 
-        <div className="flex gap-3">
-          <button
-            onClick={() => scrollByCard("left")}
-            className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-900"
-          >
-            <CaretLeft size={20} />
-          </button>
-          <button
-            onClick={() => scrollByCard("right")}
-            className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-900"
-          >
-            <CaretRight size={20} />
-          </button>
-        </div>
-      </div>
+        {/* Carousel Container */}
+        <div
+          ref={containerRef}
+          className="flex gap-8 overflow-x-hidden no-scrollbar pb-12 cursor-grab active:cursor-grabbing"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Tripled array for smoother loop */}
+          {[...educators, ...educators, ...educators].map((edu, i) => (
+            <div
+              key={`${edu.name}-${i}`}
+              className="min-w-[320px] md:min-w-[400px] group transition-all duration-500"
+            >
+              <div className="relative rounded-3xl overflow-hidden bg-slate-900 border border-white/5 shadow-2xl transition-transform duration-500 group-hover:-translate-y-2">
+                {/* Image & Video Preview */}
+                <div className="relative aspect-video overflow-hidden">
+                  <img
+                    src={edu.image}
+                    alt={edu.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1d] via-transparent to-transparent opacity-80" />
 
-      {/* Cards */}
-      <div
-        ref={listRef}
-        className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-10"
-      >
-        {educators.map((educator, index) => (
-          <div
-            key={educator.name}
-            className={`min-w-[340px] md:min-w-[380px] rounded-xl border p-4 bg-white dark:bg-slate-900/50 transition-opacity ${
-              index === activeIndex ? "opacity-100" : "opacity-60"
-            }`}
-          >
-            <div className="relative overflow-hidden rounded-lg mb-5 group">
-              <img
-                src={educator.image}
-                alt={educator.name}
-                className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
-                  <Play size={22} className="ml-1 text-white" />
+                  {/* Stats Overlay */}
+                  <div className="absolute top-4 left-4 flex flex-col gap-2">
+                    <div className="px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center gap-2">
+                      <Users size={14} className="text-primary" />
+                      <span className="text-[10px] font-bold text-white uppercase tracking-wider">{edu.stats.students} Students</span>
+                    </div>
+                    <div className="px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center gap-2">
+                      <VideoCamera size={14} className="text-blue-400" />
+                      <span className="text-[10px] font-bold text-white uppercase tracking-wider">{edu.stats.videos} Lessons</span>
+                    </div>
+                  </div>
+
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button
+                      onClick={() => setActiveVideo(edu.video)}
+                      className="w-20 h-20 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-2xl shadow-primary/40 transform scale-75 group-hover:scale-100 transition-transform duration-500"
+                    >
+                      <Play size={32} weight="fill" className="ml-1" />
+                    </button>
+                  </div>
+
+                  {/* Info Overlay */}
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <p className="text-primary font-bold text-xs uppercase tracking-[0.2em] mb-1">{edu.role}</p>
+                    <h3 className="text-2xl font-display font-black text-white">{edu.name}</h3>
+                  </div>
+                </div>
+
+                {/* Content Area */}
+                <div className="p-6 bg-[#0f172a] border-t border-white/5">
+                  <div className="flex flex-wrap gap-2">
+                    {edu.courses.map((course) => (
+                      <span
+                        key={course.name}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold text-white uppercase tracking-wider bg-gradient-to-br ${course.color} shadow-lg shadow-black/20`}
+                      >
+                        <course.icon size={12} weight="bold" />
+                        {course.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-
-            <h3 className="text-xl font-display font-bold">
-              {educator.name}
-            </h3>
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-              {educator.description}
-            </p>
-
-            <div className="mt-5">
-              <span className="text-xs uppercase tracking-widest text-slate-400">
-                Video Courses
-              </span>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {educator.courses.map((course) => (
-                  <span
-                    key={course.name}
-                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-${course.color}-50 text-${course.color}-700`}
-                  >
-                    <Folder size={14} />
-                    {course.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* Scroll Dots */}
-      <div className="flex justify-center mt-8 gap-2">
-        {educators.map((_, index) => (
+      {/* Video Modal */}
+      {activeVideo && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-300"
+          onClick={() => setActiveVideo(null)}
+        >
           <div
-            key={index}
-            className={`h-1.5 rounded-full transition-all ${
-              index === activeIndex
-                ? "w-8 bg-primary"
-                : "w-1.5 bg-slate-300 dark:bg-slate-700"
-            }`}
-          />
-        ))}
-      </div>
+            className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <video
+              src={activeVideo}
+              className="w-full h-full"
+              controls
+              autoPlay
+            />
+            <button
+              onClick={() => setActiveVideo(null)}
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center backdrop-blur-md transition-colors"
+            >
+              <X size={24} />
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
