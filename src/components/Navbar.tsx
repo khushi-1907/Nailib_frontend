@@ -11,13 +11,6 @@ const NAV_LINKS = [
   { label: "Pricing", href: "#", icon: CurrencyDollar },
 ];
 
-const NAV_LINKS = [
-  { label: "Resources", href: "#", icon: Book },
-  { label: "Schools", href: "#", icon: GraduationCap },
-  { label: "Past Papers", href: "#", icon: FileText },
-  { label: "Pricing", href: "#", icon: CurrencyDollar },
-];
-
 const Navbar: FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
