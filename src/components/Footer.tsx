@@ -46,13 +46,13 @@ export default function Footer() {
                     <div>
                         <h6 className="font-bold mb-6 text-white">Stay Updated</h6>
                         <p className="text-sm text-slate-300 mb-6">Get the latest IB tips and resource updates directly.</p>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 group/input">
                             <input
-                                className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-white placeholder:text-slate-500"
+                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary focus:border-primary/50 outline-none transition-all text-white placeholder:text-slate-600 border-white/10"
                                 placeholder="Email address"
                                 type="email"
                             />
-                            <button className="bg-primary hover:bg-blue-600 text-white p-3 rounded-xl transition-colors shadow-lg shadow-primary/20">
+                            <button className="bg-primary hover:bg-blue-600 text-white p-3 rounded-xl transition-all shadow-lg hover:shadow-primary/40 active:scale-95">
                                 <EnvelopeSimple size={20} />
                             </button>
                         </div>
