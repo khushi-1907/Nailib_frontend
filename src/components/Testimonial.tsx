@@ -9,16 +9,16 @@ import {
   X,
 } from "phosphor-react";
 
-type Testimonial = {
+interface Testimonial {
   id: string;
   name: string;
   quote?: string;
   image: string;
   video?: string;
   role?: string;
-};
+}
 
-const testimonials: Testimonial[] = [
+const TESTIMONIALS: Testimonial[] = [
   {
     id: "1",
     name: "Hazel Barnes",
@@ -149,7 +149,7 @@ export default function TestimonialsShowcase() {
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+          {[...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
             <div
               key={`${t.id}-${i}`}
               className="min-w-[320px] md:min-w-[380px]"
