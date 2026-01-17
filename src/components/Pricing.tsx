@@ -6,7 +6,14 @@ import { CheckCircle, LockOpen, ArrowRight, Book } from "phosphor-react";
 
 type PlanId = "24" | "12" | "monthly";
 
-const plans = {
+interface Plan {
+    monthly: string;
+    old: string;
+    total: string;
+    savings: string;
+}
+
+const plans: Record<PlanId, Plan> = {
     "24": { monthly: "INR 519/mo", old: "INR 3999/mo", total: "INR 12456", savings: "87%" },
     "12": { monthly: "INR 999/mo", old: "INR 3999/mo", total: "INR 11988", savings: "75%" },
     "monthly": { monthly: "INR 3999/mo", old: "", total: "INR 3999", savings: "0%" },
